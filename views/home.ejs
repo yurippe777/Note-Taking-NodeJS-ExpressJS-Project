@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Note Keeper</title>
+	<style>
+		body {
+			background-image: url('https://images.freeimages.com/images/large-previews/bb5/blue-hearts-1641616.jpg');
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
+
+		.gold-bg {
+			background-color: #ffd700;
+		}
+
+		.silver-bg {
+			background-color: #c0c0c0;
+		}
+
+		.bronze-bg {
+			background-color: #cd7f32;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>Note Keeper</h1>
+
+	<div style="display: flex;">
+		<% data.forEach((element, index) => { %>
+			<form action="/update" method="post">
+				<input type="number" style="display: none;"
+					name="noteId" value="<%= element.noteId %>">
+				<textarea type="text" rows="6" cols="30"
+					placeholder="Type Here..." name="noteContent"
+					value="<%= element.noteContent %>"
+					class="<%= index == 0 ? 'gold-bg' : index == 1 ? 'silver-bg' : index == 2 ? 'bronze-bg' : '' %>">
+					<%= element.noteContent %>
+				</textarea>
+				<br>
+				<button type="submit">Update</button>
+			</form>
+
+			<form action="/delete" method="post">
+				<input type="number" style="display: none;"
+					name="noteId" value="<%= element.noteId %>">
+				<button type="submit"
+					style="margin: 0px 4px;">✕</button>
+			</form>
+
+			<% if (index > 0) { %>
+				<form action="/moveleft" method="post">
+					<input type="number" style="display: none;"
+						name="noteId" value="<%= element.noteId %>">
+					<button type="submit"
+						style="margin: 0px 4px;">&lt;</button>
+				</form>
+			<% } %>
+
+			<% if (index < data.length - 1) { %>
+				<form action="/moveright" method="post">
+					<input type="number" style="display: none;"
+						name="noteId" value="<%= element.noteId %>">
+					<button type="submit"
+						style="margin: 0px 4px;">&gt;</button>
+				</form>
+			<% } %>
+
+		<% }) %>
+	</div>
+
+	<h1>Add Note</h1>
+	<form action="/update" method="post">
+		<input type="number" style="display: none;"
+			name="noteId">
+		<textarea type="text" rows="6" cols="30"
+			placeholder="Type Here..."
+			name="noteContent" class="white-bg"></textarea>
+		<br>
+		<button type="submit">Add</button>
+	</form>
+</body>
+
+</html>
